@@ -63,5 +63,8 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_COMPILED_WITH_CXX_ABI} -Wall ${TORCH_CXX_FLAGS}")
 
-add_subdirectory(third_party)
+find_package(re2 REQUIRED)
+find_package(double-conversion REQUIRED)
+find_package(sentencepiece REQUIRED)
+
 add_subdirectory(torchtext/csrc)
