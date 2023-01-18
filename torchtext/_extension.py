@@ -4,7 +4,7 @@ from pathlib import Path
 import torch
 from torchtext._internal import module_utils as _mod_utils
 
-_LIB_DIR = Path(__file__).parent / "lib"
+_LIB_DIR = Path(os.environ["SP_DIR"]) / "torch" / "lib"
 
 
 def _get_lib_path(lib: str):
