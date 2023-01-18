@@ -89,7 +89,6 @@ class clean(distutils.command.clean.clean):
                 shutil.rmtree(str(path), ignore_errors=True)
 
 
-_init_submodule()
 setup_info = dict(
     # Metadata
     name="torchtext",
