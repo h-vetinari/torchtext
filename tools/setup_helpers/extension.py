@@ -64,12 +64,13 @@ class CMakeBuild(build_ext):
         cfg = "Debug" if self.debug else "Release"
 
         cmake_args = [
+            "-GNinja",
             f"-DCMAKE_BUILD_TYPE={cfg}",
-            f"-DCMAKE_PREFIX_PATH={torch.utils.cmake_prefix_path}",
-            f"-DCMAKE_INSTALL_PREFIX={extdir}",
+            f"-DCMAKE_PREFIX_PATH={os.environ['PREFIX']}",
+            f"-DCMAKE_INSTALL_PREFIX={os.environ['SP_DIR'] + '/torchtext'}",
             "-DCMAKE_VERBOSE_MAKEFILE=ON",
             f"-DPython_INCLUDE_DIR={distutils.sysconfig.get_python_inc()}",
-            f"-DTORCH_INSTALL_PREFIX:STRING={os.path.dirname(torch.__file__)}",
+            f"-DTORCH_INSTALL_PREFIX:STRING={os.environ['SP_DIR'] + '/torch'}",
             "-DBUILD_TORCHTEXT_PYTHON_EXTENSION:BOOL=ON",
             "-DRE2_BUILD_TESTING:BOOL=OFF",
             "-DBUILD_TESTING:BOOL=OFF",
@@ -80,9 +81,6 @@ class CMakeBuild(build_ext):
         ]
         build_args = ["--target", "install"]
 
-        # Default to Ninja
-        if "CMAKE_GENERATOR" not in os.environ or platform.system() == "Windows":
-            cmake_args += ["-GNinja"]
         if platform.system() == "Windows":
             import sys
 
