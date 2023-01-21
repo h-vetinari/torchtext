@@ -201,17 +201,17 @@ class TestTransformsWithAsset(TorchtextTestCase):
         self.assertEqual(dict(v2.get_stoi()), expected_stoi)
 
     def test_builtin_pretrained_sentencepiece_processor(self) -> None:
-        sp_model_path = download_from_url(PRETRAINED_SP_MODEL["text_unigram_25000"])
-        spm_tokenizer = sentencepiece_tokenizer(sp_model_path)
         _path = os.path.join(self.project_root, ".data", "text_unigram_25000.model")
+        sp_model_path = download_from_url(PRETRAINED_SP_MODEL["text_unigram_25000"], path=_path)
+        spm_tokenizer = sentencepiece_tokenizer(sp_model_path)
         os.remove(_path)
         test_sample = "the pretrained spm model names"
         ref_results = ["\u2581the", "\u2581pre", "trained", "\u2581sp", "m", "\u2581model", "\u2581names"]
         self.assertEqual(spm_tokenizer(test_sample), ref_results)
 
-        sp_model_path = download_from_url(PRETRAINED_SP_MODEL["text_bpe_25000"])
-        spm_transform = sentencepiece_processor(sp_model_path)
         _path = os.path.join(self.project_root, ".data", "text_bpe_25000.model")
+        sp_model_path = download_from_url(PRETRAINED_SP_MODEL["text_bpe_25000"], path=_path)
+        spm_transform = sentencepiece_processor(sp_model_path)
         os.remove(_path)
         test_sample = "the pretrained spm model names"
         ref_results = [13, 1465, 12824, 304, 24935, 5771, 3776]
